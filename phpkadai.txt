@@ -1,0 +1,91 @@
+load data local
+infile 'products.csv'
+into table products
+fields
+    terminated by ','
+    enclosed by "'"
+    lines terminated by '\r\n'
+;
+
+create table user(
+   user_id  varchar(20)  primary key,
+   name     nvarchar(20)  not null,
+   password   varchar(10) not null,
+   email    varchar(30)  not null,
+   permision  int  not null
+);
+
+
+create table type(
+   type_id  int primary key,
+   name     nvarchar(10)
+);
+
+create table status(
+   status_id  int primary key,
+   name nvarchar(10)
+);
+
+
+create table products(
+   product_id int auto_increment primary key,
+   type_id  int  not null,
+   name nvarchar(100) not null,
+   price int not null,
+   orderDate  date not null,
+   Status_id int not null,
+   user_id  varchar(20) not null,
+   deliveryDate   date not null,
+   FOREIGN KEY (type_id) REFERENCES type(type_id)
+   FOREIGN KEY (Status_id) REFERENCES status(status_id)
+   FOREIGN KEY (user_id) REFERENCES user(user_id)
+);
+
+
+
+INSERT INTO user(user_id, name, password, email, permision) VALUES
+('hoge', '山田太郎', 'P@ssw0rd', 'hoge@yic.ac.jp', 1),
+('k-yagwa', '柳川小次郎', 'yagayaga', 'k-yagwa@yic.ac.jp', 2),
+('sugi', '杉林伸繋', 'sugisugi', 'sugi@yic.ac.jp', 2);
+
+ 
+INSERT INTO type(type_id, name) VALUES
+(1, '書籍'),
+(2, 'サプライ品'),
+(3, 'アウトドア用品'),
+(4, 'DVD'),
+(5, 'ゲーム'),
+(6, '家電'),
+(7, 'カメラ');
+
+
+INSERT INTO status(status_id, name) VALUES
+(1, '発注済'),
+(2, '納品済'),
+(3, '未発注'),
+(4, '返品');
+
+
+
+INSERT INTO products(type_id, name, price, orderDate, Status_id, user_id, deliveryDate) VALUES
+(5, '東洋アルミ(TOYO ALUMINIUM) ほこり取り ホワイト 約30x30cm パッと貼るだけホコリとりフィルター換気扇用 5410 5枚入', 300 , '2022-08-10', 4, 'sugi', '2022-08-15'),
+(1, 'P4 コントローラー NEWモデル ワイヤレス 新バージョン 600mAh ジャイロセンサー機能 イヤホンジャック ゲームパット 二重振動 高耐久ボタン（ブラック＋ブルー）', 2980, '2022-05-02', 1, 'k-yagwa', '2022-05-03'),
+(2, '絵の具 エフ水彩 WFC2-15 ポリチューブ入り 15色', 900, '2022-05-30', 4, 'sugi', '2022-06-01'),
+(2, 'サクラクレパス クレパス 12色 ゴムバンド付き LP12R', 404, '2022-06-22', 3, 'hoge', '2022-06-28'),
+(4, '50枚入　KF94マスク　使い捨て　不織布　4層3D立体　血色カラー (ふつうサイズ, アイボリー) [並行輸入品]', 1990, '2022-08-10', 3, 'hoge', '2022-08-13'),
+(5, '【業務用 塩素系除菌漂白剤】キッチン泡ハイター つけかえ用 1000ml(花王プロフェッショナルシリーズ)', 486, '2022-08-10', 2, 'k-yagwa', '2022-08-13'),
+(4, 'アイリスオーヤマ マスク 不織布 カラーマスク 立体 個包装 DAILY FIT MASK ふつうサイズ 5枚入 RK-D5MBK ブラック', 3850, '2022-12-25', 1, 'k-yagwa', '2022-08-10'),
+(5, 'カネヨ石鹸 カネヨンバスクレンザー進撃の巨人 400ｇ スカイサボンの香り 除菌', 710, '2022-12-25', 2, 'hoge', '2022-12-29'),
+(5, '【進撃の巨人Box 全６種入】富士フイルムHydroAg＋持続除菌アルコール60％ 200mlスプレー期間限定6本セット', 6700, '2022-12-25', 4, 'hoge', '2022-12-29'),
+(6, 'スプラトゥーン3 -Switch', 5673, '2022-12-25', 3, 'sugi', '2022-12-29'),
+(7, '[Amazon限定ブランド]CCL い・ろ・は・すラベルレス 2LPET ×8本', 890, '2022-12-25', 3, 'k-yagwa', '2022-12-29'),
+(7, 'ハーゲンダッツ　アイスクリーム　 A バラエティ６種セット　12個', 4190, '2023-01-11', 2, 'hoge', '2023-01-20'),
+(1, 'ワイヤレス イヤホン Bluetoothイヤホン 自動ペアリング 低遅延 左右分離型 片耳 両耳モード 小型 防水 Siri対応 Type-C充電 (S2-D6E-101)', 2999, '2023-01-11', 1, 'k-yagwa', '2023-01-20');
+
+
+
+
+
+
+
+
